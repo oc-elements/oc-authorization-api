@@ -36,11 +36,9 @@ Element to consume Ordercloud authorization API.
        */
       getOrganisationMembers: function(organisationId, groupIds) {
 
-        groupIds = groupIds || [];
-
         this.$.getOrganisationMembers.url = this._url('authorization/organisation/' + organisationId + '/members');
         this.$.getOrganisationMembers.params = {
-          groupId: groupIds
+          groupId: groupIds || []
         };
         return this._generateRequest(this.$.getOrganisationMembers);
       }
