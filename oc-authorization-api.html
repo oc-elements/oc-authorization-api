@@ -30,17 +30,18 @@ Element to consume Ordercloud authorization API.
       /**
        * Retrieve members of an organisation
        *
-       * @param {Long} organisationId
-       * @param {Array[Long]} groupIds (Optional, when omitted, all members of all groups are returned)
+       * @param {Number} organisationId
+       * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
        * @return {Promise}
        */
       getOrganisationMembers: function(organisationId, groupIds) {
 
-        var queryParams = (groupIds || []).reduce(function(previousValue, currentValue, currentIndex, array) {
-          return previousValue + "&groupId=" + currentValue;
-        }, (groupIds.length > 0 ? "?groupId=" + groupIds[0] : ""));
+        groupIds = groupIds || [];
 
-        this.$.getOrganisationMembers.url = this._url('authorization/organisation/' + organisationId + '/members' + queryParams);
+        this.$.getOrganisationMembers.url = this._url('authorization/organisation/' + organisationId + '/members');
+        this.$.getOrganisationMembers.params = {
+          groupId: groupIds
+        };
         return this._generateRequest(this.$.getOrganisationMembers);
       }
     });
