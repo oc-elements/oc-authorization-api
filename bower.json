@@ -4,7 +4,7 @@
   "main": "oc-authorization-api.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "oc-core-utils": "^0.1.0",
+    "oc-core-utils": "git://github.com/oc-elements/oc-core-utils#1.x",
     "iron-ajax": "PolymerElements/iron-ajax#^1.2.0"
   },
   "devDependencies": {
