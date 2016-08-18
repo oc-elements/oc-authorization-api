@@ -9,6 +9,7 @@ Element to consume Ordercloud authorization API.
   <template>
     <iron-ajax id="getOrganisations"></iron-ajax>
     <iron-ajax id="getOrganisationMembers"></iron-ajax>
+    <iron-ajax id="getOrganisationGroups"></iron-ajax>
   </template>
 
   <script>
@@ -17,7 +18,7 @@ Element to consume Ordercloud authorization API.
       behaviors: [OC.Behaviours.ApiProvider],
 
       /**
-       * Retrieve organisations where the user has the givin permission.
+       * Retrieve organisations where the user has the given permission.
        *
        * @param {String} permission
        * @return {Promise}
@@ -41,7 +42,21 @@ Element to consume Ordercloud authorization API.
           groupId: groupIds || []
         };
         return this._generateRequest(this.$.getOrganisationMembers);
+      },
+
+      /**
+       * Retrieve groups of an organisation
+       *
+       * @param {Number} organisationId
+       * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
+       * @return {Promise}
+       */
+      getOrganisationGroups: function(organisationId) {
+
+        this.$.getOrganisationGroups.url = this._url('authorization/organisation/' + organisationId + '/groups');
+        return this._generateRequest(this.$.getOrganisationGroups);
       }
+
     });
   </script>
 </dom-module>
