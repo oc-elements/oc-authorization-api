@@ -10,6 +10,8 @@ Element to consume Ordercloud authorization API.
     <iron-ajax id="getOrganisations"></iron-ajax>
     <iron-ajax id="getOrganisationMembers"></iron-ajax>
     <iron-ajax id="getOrganisationGroups"></iron-ajax>
+    <iron-ajax id="removeOrganisationMembers"></iron-ajax>
+    <iron-ajax id="addOrganisationMembers"></iron-ajax>
   </template>
 
   <script>
@@ -55,7 +57,41 @@ Element to consume Ordercloud authorization API.
 
         this.$.getOrganisationGroups.url = this._url('authorization/organisation/' + organisationId + '/groups');
         return this._generateRequest(this.$.getOrganisationGroups);
-      }
+      },
+
+      /**
+       * Remove a member from a group associated with an organisation organisation
+       *
+       * @param {Number} organisationId
+       * @param {Number} groupId
+       * @param {Number[]} userIds
+       * @return {Promise}
+       */
+      removeOrganisationMembers: function(organisationId, groupId, userIds) {
+
+        this.$.removeOrganisationMembers.url = this._url('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+        this.$.removeOrganisationMembers.method = "DELETE";
+        this.$.removeOrganisationMembers.contentType = "application/json";
+        this.$.removeOrganisationMembers.body = JSON.stringify(userIds);
+        return this._generateRequest(this.$.removeOrganisationMembers);
+      },
+
+      /**
+       * Add a member to a group associated with an organisation organisation
+       *
+       * @param {Number} organisationId
+       * @param {Number} groupId
+       * @param {Number[]} userIds
+       * @return {Promise}
+       */
+      addOrganisationMembers: function(organisationId, groupId, userIds) {
+
+        this.$.addOrganisationMembers.url = this._url('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+        this.$.addOrganisationMembers.method = "POST";
+        this.$.addOrganisationMembers.contentType = "application/json";
+        this.$.addOrganisationMembers.body = JSON.stringify(userIds);
+        return this._generateRequest(this.$.addOrganisationMembers);
+      },
 
     });
   </script>
