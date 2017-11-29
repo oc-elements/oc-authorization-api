@@ -74,7 +74,7 @@
          */
         removeOrganisationMembers(organisationId, groupId, userIds) {
 
-            this.$.removeOrganisationMembers.url = this._generateUrll('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+            this.$.removeOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
             this.$.removeOrganisationMembers.method = "DELETE";
             this.$.removeOrganisationMembers.contentType = "application/json";
             this.$.removeOrganisationMembers.body = JSON.stringify(userIds);
