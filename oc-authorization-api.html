@@ -19,7 +19,7 @@
      * @polymer
      * @demo demo/index.html
      */
-    class OcAuthorizationApi extends Polymer.Element {
+    class OcAuthorizationApi extends Ordercloud.ApiMixin(Polymer.Element)  {
       static get is() { return 'oc-authorization-api'; }
       static get properties() {
         return {};
