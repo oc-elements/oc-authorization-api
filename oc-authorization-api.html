@@ -31,7 +31,7 @@
          * @return {Promise}
          */
         getOrganisations(permission) {
-            this.$.getOrganisations.url = this._url('authorization/user/permission/' + permission + '/organisations');
+            this.$.getOrganisations.url = this._generateUrl('authorization/user/permission/' + permission + '/organisations');
             return this._generateRequest(this.$.getOrganisations);
         }
 
@@ -44,7 +44,7 @@
          */
         getOrganisationMembers(organisationId, groupIds) {
 
-            this.$.getOrganisationMembers.url = this._url('authorization/organisation/' + organisationId + '/members');
+            this.$.getOrganisationMembers.url = this._generateUrl('authorization/organisation/' + organisationId + '/members');
             this.$.getOrganisationMembers.params = {
                 groupId: groupIds || []
             };
@@ -60,7 +60,7 @@
          */
         getOrganisationGroups(organisationId) {
 
-            this.$.getOrganisationGroups.url = this._url('authorization/organisation/' + organisationId + '/groups');
+            this.$.getOrganisationGroups.url = this._generateUrl('authorization/organisation/' + organisationId + '/groups');
             return this._generateRequest(this.$.getOrganisationGroups);
         }
 
@@ -74,7 +74,7 @@
          */
         removeOrganisationMembers(organisationId, groupId, userIds) {
 
-            this.$.removeOrganisationMembers.url = this._url('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+            this.$.removeOrganisationMembers.url = this._generateUrll('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
             this.$.removeOrganisationMembers.method = "DELETE";
             this.$.removeOrganisationMembers.contentType = "application/json";
             this.$.removeOrganisationMembers.body = JSON.stringify(userIds);
@@ -91,7 +91,7 @@
          */
         addOrganisationMembers(organisationId, groupId, userIds) {
 
-            this.$.addOrganisationMembers.url = this._url('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+            this.$.addOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
             this.$.addOrganisationMembers.method = "POST";
             this.$.addOrganisationMembers.contentType = "application/json";
             this.$.addOrganisationMembers.body = JSON.stringify(userIds);
