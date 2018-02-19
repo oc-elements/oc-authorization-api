@@ -12,94 +12,94 @@
   </template>
 
   <script>
-    /**
-     * `oc-authorization-api`
-     * Autorization Element
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class OcAuthorizationApi extends Ordercloud.ApiMixin(Polymer.Element)  {
-      static get is() { return 'oc-authorization-api'; }
-      static get properties() {
-        return {};
+      /**
+       * `oc-authorization-api`
+       * Autorization Element
+       *
+       * @customElement
+       * @polymer
+       * @demo demo/index.html
+       */
+      class OcAuthorizationApi extends Ordercloud.ApiMixin(Polymer.Element)  {
+          static get is() { return 'oc-authorization-api'; }
+          static get properties() {
+              return {};
+          }
+          /**
+           * Retrieve organisations where the user has the given permission.
+           *
+           * @param {String} permission
+           * @return {Promise}
+           */
+          getOrganisations(permission) {
+              this.$.getOrganisations.url = this._generateUrl('authorization/user/permission/' + permission + '/organisations');
+              return this._generateRequest(this.$.getOrganisations, true);
+          }
+
+          /**
+           * Retrieve members of an organisation
+           *
+           * @param {Number} organisationId
+           * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
+           * @return {Promise}
+           */
+          getOrganisationMembers(organisationId, groupIds) {
+
+              this.$.getOrganisationMembers.url = this._generateUrl('authorization/organisation/' + organisationId + '/members');
+              this.$.getOrganisationMembers.params = {
+                  groupId: groupIds || []
+              };
+              return this._generateRequest(this.$.getOrganisationMembers);
+          }
+
+          /**
+           * Retrieve groups of an organisation
+           *
+           * @param {Number} organisationId
+           * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
+           * @return {Promise}
+           */
+          getOrganisationGroups(organisationId) {
+
+              this.$.getOrganisationGroups.url = this._generateUrl('authorization/organisation/' + organisationId + '/groups');
+              return this._generateRequest(this.$.getOrganisationGroups);
+          }
+
+          /**
+           * Remove a member from a group associated with an organisation organisation
+           *
+           * @param {Number} organisationId
+           * @param {Number} groupId
+           * @param {Number[]} userIds
+           * @return {Promise}
+           */
+          removeOrganisationMembers(organisationId, groupId, userIds) {
+
+              this.$.removeOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+              this.$.removeOrganisationMembers.method = "DELETE";
+              this.$.removeOrganisationMembers.contentType = "application/json";
+              this.$.removeOrganisationMembers.body = JSON.stringify(userIds);
+              return this._generateRequest(this.$.removeOrganisationMembers);
+          }
+
+          /**
+           * Add a member to a group associated with an organisation organisation
+           *
+           * @param {Number} organisationId
+           * @param {Number} groupId
+           * @param {Number[]} userIds
+           * @return {Promise}
+           */
+          addOrganisationMembers(organisationId, groupId, userIds) {
+
+              this.$.addOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
+              this.$.addOrganisationMembers.method = "POST";
+              this.$.addOrganisationMembers.contentType = "application/json";
+              this.$.addOrganisationMembers.body = JSON.stringify(userIds);
+              return this._generateRequest(this.$.addOrganisationMembers);
+          }
       }
-        /**
-         * Retrieve organisations where the user has the given permission.
-         *
-         * @param {String} permission
-         * @return {Promise}
-         */
-        getOrganisations(permission) {
-            this.$.getOrganisations.url = this._generateUrl('authorization/user/permission/' + permission + '/organisations');
-            return this._generateRequest(this.$.getOrganisations);
-        }
 
-        /**
-         * Retrieve members of an organisation
-         *
-         * @param {Number} organisationId
-         * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
-         * @return {Promise}
-         */
-        getOrganisationMembers(organisationId, groupIds) {
-
-            this.$.getOrganisationMembers.url = this._generateUrl('authorization/organisation/' + organisationId + '/members');
-            this.$.getOrganisationMembers.params = {
-                groupId: groupIds || []
-            };
-            return this._generateRequest(this.$.getOrganisationMembers);
-        }
-
-        /**
-         * Retrieve groups of an organisation
-         *
-         * @param {Number} organisationId
-         * @param {Number[]} groupIds (Optional, when omitted, all members of all groups are returned)
-         * @return {Promise}
-         */
-        getOrganisationGroups(organisationId) {
-
-            this.$.getOrganisationGroups.url = this._generateUrl('authorization/organisation/' + organisationId + '/groups');
-            return this._generateRequest(this.$.getOrganisationGroups);
-        }
-
-        /**
-         * Remove a member from a group associated with an organisation organisation
-         *
-         * @param {Number} organisationId
-         * @param {Number} groupId
-         * @param {Number[]} userIds
-         * @return {Promise}
-         */
-        removeOrganisationMembers(organisationId, groupId, userIds) {
-
-            this.$.removeOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
-            this.$.removeOrganisationMembers.method = "DELETE";
-            this.$.removeOrganisationMembers.contentType = "application/json";
-            this.$.removeOrganisationMembers.body = JSON.stringify(userIds);
-            return this._generateRequest(this.$.removeOrganisationMembers);
-        }
-
-        /**
-         * Add a member to a group associated with an organisation organisation
-         *
-         * @param {Number} organisationId
-         * @param {Number} groupId
-         * @param {Number[]} userIds
-         * @return {Promise}
-         */
-        addOrganisationMembers(organisationId, groupId, userIds) {
-
-            this.$.addOrganisationMembers.url = this._generateUrl('authorization/organisation/'+organisationId+'/group/'+groupId+'/members');
-            this.$.addOrganisationMembers.method = "POST";
-            this.$.addOrganisationMembers.contentType = "application/json";
-            this.$.addOrganisationMembers.body = JSON.stringify(userIds);
-            return this._generateRequest(this.$.addOrganisationMembers);
-        }
-    }
-
-    window.customElements.define(OcAuthorizationApi.is, OcAuthorizationApi);
+      window.customElements.define(OcAuthorizationApi.is, OcAuthorizationApi);
   </script>
 </dom-module>
