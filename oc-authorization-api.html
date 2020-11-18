@@ -36,8 +36,15 @@
 			 * @param {String} permission
 			 * @return {Promise}
 			 */
-			getOrganisations(permission) {
-				this.$.getOrganisations.url = this._generateUrl('authorization/user/permission/' + permission + '/organisations');
+			getOrganisations(page, pageSize, searchTerm) {
+				///authorization/user/organisations
+				this.$.getOrganisations.url = this._generateUrl('authorization/user/organisations');
+				this.$.getOrganisations.params = {
+					page: page,
+					pagesize: pageSize,
+					search: '' || searchTerm
+
+				};
 				return this._generateRequest(this.$.getOrganisations, true);
 			}
 
